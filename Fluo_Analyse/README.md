@@ -13,7 +13,7 @@ pour segmenter et compter les lysosomes à l'intérieur de chaque soma détecté
 | Fichier | Rôle |
 |---|---|
 | `Include.ipynb` | Toutes les dépendances et fonctions utilitaires |
-| `soma_cnn_test.pth` | Poids du CNN soma (généré par `Generation_ML_puncta.ipynb`) |
+| `soma_cnn_test.pth` | Poids du CNN soma (généré par `Pipeline_ML.ipynb`) |
 
 ### Dépendances Python
 ```bash
