@@ -85,31 +85,47 @@ img_best = Best_plan_determination(chemin, output_flag=True)
 
 ## Paramètres clés à calibrer
 
-### CNN soma
-| Paramètre | Défaut | Description |
-|---|---|---|
-| `cnn_threshold` | 0.23 | Seuil de probabilité CNN — calibré via la courbe Precision-Recall |
-| `patch_size` | 64 | Doit correspondre à la valeur utilisée à l'entraînement |
-| `overlap_thresh` | 0.9 | Fraction de chevauchement pour la fusion des ROI |
+### Pre-processing
 
-### Prétraitement image
-| Paramètre | Défaut | Description |
-|---|---|---|
-| `pretraitement_sigma` | 1.5 | Sigma du flou gaussien |
-| `clip_limit` | 0.02 | Limite CLAHE |
-| `distance_transform` | 40 | Seuil distance pour isoler le cœur du soma |
-| `margin` | 40 | Marge (px) autour du soma pour la suppression |
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `pretraitement_sigma` | `1.5` | Gaussian blur sigma before blob detection |
+| `clip_limit` | `0.02` | CLAHE contrast enhancement clip limit |
 
-### Cellpose (lysosomes)
-| Paramètre | Défaut | Description |
-|---|---|---|
-| `diameter` | 8 | Diamètre estimé des lysosomes (px) |
-| `cellprob_threshold` | 0.1 | Seuil Cellpose (↓ = plus de détections) |
-| `flow_threshold` | 0.5 | Cohérence des flux (↑ = plus strict) |
-| `min_area` / `max_area` | 5 / 500 | Filtre aire des objets détectés (px²) |
-| `min_circularity` | 0.5 | Filtre circularité (élimine artefacts allongés) |
-| `max_axis_ratio` | 2 | Rapport axes max (élimine dendrites) |
-| `top_hat_radius` | 10 | Rayon disque top-hat (> rayon lysosome) |
+### Soma detection (CNN)
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `cnn_threshold` | `0.23` | Minimum CNN probability to classify a patch as soma |
+| `patch_size` | `64` | Size (px) of the square patch extracted around each blob |
+| `cnn_batch_size` | `256` | Patches per CNN forward pass (increase for faster processing) |
+
+### Soma exclusion (fluorescence stats)
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `distance_transform` | `40` | Distance (px) to erode soma mask before exclusion |
+| `margin` | `40` | Extra margin (px) added around each soma bounding box |
+
+### ROI fusion
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `overlap_thresh` | `0.9` | Fraction of overlap above which a smaller ROI is discarded |
+
+### Cellpose segmentation
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `diameter` | `8` | Expected lysosome diameter in pixels |
+| `cellprob_threshold` | `0.1` | Cellpose cell probability threshold |
+| `flow_threshold` | `0.5` | Cellpose flow error threshold |
+| `min_area` | `5` | Minimum area (px²) to keep a detected object |
+| `max_area` | `500` | Maximum area (px²) to keep a detected object |
+| `min_circularity` | `0.5` | Minimum circularity (0–1) — filters elongated dendrite fragments |
+| `max_axis_ratio` | `2` | Maximum ratio of major/minor axis — filters dendrites |
+| `top_hat_radius` | `10` | Disk radius for white top-hat pre-filter |
+| `cellpose_batch_size` | `8` | Patches per Cellpose forward pass |
 
 ---
 
