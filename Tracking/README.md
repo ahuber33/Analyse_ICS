@@ -8,6 +8,19 @@ et TrackPy pour le linking des trajectoires frame par frame.
 
 ## Prérequis
 
+```bash
+pip install torch torchvision torchaudio
+pip install scikit-image==0.25.2
+pip install tifffile==2023.4.12
+pip install scipy==1.17.1
+pip install numpy==1.26.4
+pip install pandas==2.2.2
+pip install umap-learn
+pip install trackpy
+pip install cellpose==2.1.0
+pip install tqdm matplotlib
+```
+
 ### Fichiers nécessaires
 | Fichier | Rôle |
 |---|---|
