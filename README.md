@@ -201,12 +201,20 @@ Stack TIFF (T frames) → Tri chronologique → Détection par frame
 ```
 projet/
 ├── Include.ipynb
-├── Pipeline_ML.ipynb
-├── Fluo_Analyse.ipynb
-├── Tracking.ipynb
 ├── soma_cnn_test.pth               ← généré par Pipeline_ML
-├── patches_seuil_0.3_64x64_float32.npy
-├── manual_soma_selection.npy
+├── patches_seuil_0.3_64x64_float32.npy ← à créer dans Pipeline_ML ou à télécharger  
+│
+├── Fluo_Analyse/
+│   ├── Fluo_Analyse.ipynb
+│   └── README_Fluo_Analyse
+│
+├── Pipeline_ML/
+│   ├── Pipeline_ML.ipynb
+│   └── README_Pipeline_ML
+│
+├── Tracking/
+│   ├── Tracking.ipynb
+│   └── README_Tracking
 │
 ├── data/
 │   ├── images_fixes/               ← TIFFs pour Fluo_Analyse
