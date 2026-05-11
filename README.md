@@ -206,15 +206,15 @@ projet/
 │
 ├── Fluo_Analyse/
 │   ├── Fluo_Analyse.ipynb
-│   └── README_Fluo_Analyse
+│   └── README
 │
 ├── Pipeline_ML/
 │   ├── Pipeline_ML.ipynb
-│   └── README_Pipeline_ML
+│   └── README
 │
 ├── Tracking/
 │   ├── Tracking.ipynb
-│   └── README_Tracking
+│   └── README
 │
 ├── data/
 │   ├── images_fixes/               ← TIFFs pour Fluo_Analyse
