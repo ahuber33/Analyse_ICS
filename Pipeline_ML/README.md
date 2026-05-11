@@ -25,7 +25,7 @@ Images TIFF  →  Extraction patches  →  Auto-encodeur  →  UMAP + KMeans
 | Fichier | Rôle |
 |---|---|
 | `Include.ipynb` | Dépendances, classes et fonctions utilitaires (imports, `ConvAutoEncoder`, `SomaCNN`, `SomaBinaryDataset`, fonctions de détection, de clustering, de tracking…) |
-| `Generation_ML_puncta.ipynb` | Notebook principal — construction du dataset, entraînement, évaluation |
+| `Pipeline_ML.ipynb` | Notebook principal — construction du dataset, entraînement, évaluation |
 
 ---
 

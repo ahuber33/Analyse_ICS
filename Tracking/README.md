@@ -12,15 +12,8 @@ et TrackPy pour le linking des trajectoires frame par frame.
 | Fichier | Rôle |
 |---|---|
 | `Include.ipynb` | Toutes les dépendances et fonctions utilitaires |
-| `soma_cnn_test.pth` | Poids du CNN soma (généré par `Generation_ML_puncta.ipynb`) |
+| `soma_cnn_test.pth` | Poids du CNN soma (généré par `Pipeline_ML.ipynb`) |
 
-### Dépendances Python
-```bash
-pip install -r requirements.txt
-```
-> `requirements.txt` est généré automatiquement par la cellule 1 du notebook.
-
----
 
 ## Pipeline
 
