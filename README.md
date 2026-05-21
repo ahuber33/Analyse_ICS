@@ -1,7 +1,7 @@
-# Analyse automatisée de lysosomes en microscopie de fluorescence
+# Analyse automatisée de punctas en microscopie de fluorescence
 
 Pipeline complet d'apprentissage automatique pour la **détection, la classification
-et le suivi temporel de lysosomes** dans des images de microscopie de fluorescence.
+et le suivi temporel de punctas** dans des images de microscopie de fluorescence.
 
 ---
 
@@ -40,8 +40,8 @@ est une dépendance obligatoire pour les deux autres notebooks.**
 |---|---|
 | `Include.ipynb` | Socle commun : imports, classes (`ConvAutoEncoder`, `SomaCNN`, `SomaBinaryDataset`), et toutes les fonctions du pipeline |
 | `Pipeline_ML.ipynb` | Entraînement du CNN soma (auto-encodeur → clustering → sélection manuelle → CNN supervisé) |
-| `Fluo_Analyse.ipynb` | Analyse en production sur images fixes : comptage de lysosomes par soma + export CSV |
-| `Tracking.ipynb` | Suivi temporel de lysosomes sur stack TIFF multi-frames + génération de 7 figures d'analyse |
+| `Fluo_Analyse.ipynb` | Analyse en production sur images fixes : comptage de punctas par soma + export CSV |
+| `Tracking.ipynb` | Suivi temporel de punctas sur stack TIFF multi-frames + génération de 7 figures d'analyse |
 
 ---
 
@@ -133,7 +133,7 @@ Traite un lot de fichiers `.tif` et produit un CSV de résultats.
 ```
 Fichier TIFF → Plan net → Stats brutes → Stats hors-soma
                                │
-                    CNN (somas) → Cellpose (lysosomes)
+                    CNN (somas) → Cellpose (punctas)
                                │
                     n_lyso par image → Results_with_true.csv
 ```
@@ -145,22 +145,22 @@ Fichier TIFF → Plan net → Stats brutes → Stats hors-soma
 | `Results_with_true.csv` | Statistiques de fluorescence + `n_lyso` par image |
 | `*_best.png` | Meilleur plan z par image |
 | `*_mask_overlay.png` | Image + masque soma |
-| `*_annotated.png` | Image + ROI lysosomes annotées |
+| `*_annotated.png` | Image + ROI punctas annotées |
 
 **Paramètres clés :**
 
 | Paramètre | Défaut | Description |
 |---|---|---|
 | `cnn_threshold` | 0.23 | Seuil CNN (calibré via courbe Precision-Recall) |
-| `diameter` | 8 | Diamètre lysosomes Cellpose (px) |
-| `min_area` / `max_area` | 5 / 500 | Filtre aire des lysosomes (px²) |
+| `diameter` | 8 | Diamètre punctas Cellpose (px) |
+| `min_area` / `max_area` | 5 / 500 | Filtre aire des punctas (px²) |
 | `distance_transform` | 40 | Seuil distance pour isoler le cœur du soma |
 
 ---
 
 ## `Tracking.ipynb` — Suivi temporel
 
-Suit les lysosomes frame par frame dans un stack TIFF multi-frames.
+Suit les punctas frame par frame dans un stack TIFF multi-frames.
 
 ```
 Stack TIFF (T frames) → Tri chronologique → Détection par frame
@@ -180,9 +180,9 @@ Stack TIFF (T frames) → Tri chronologique → Détection par frame
 |---|---|
 | `histogramme_trajectoires[_CNN].png` | Distribution des longueurs de trajectoires |
 | `msd_fit[_CNN].png` | MSD moyen + exposant α de diffusion |
-| `nombre_lysosomes_par_frame[_CNN].png` | Évolution temporelle du nombre de lysosomes |
+| `nombre_punctas_par_frame[_CNN].png` | Évolution temporelle du nombre de punctas |
 | `trajectoires_moyenne[_CNN].png` | Trajectoires superposées sur image moyenne |
-| `densite_lysosomes[_CNN].png` | Carte de densité spatiale (KDE) |
+| `densite_punctas[_CNN].png` | Carte de densité spatiale (KDE) |
 | `distribution_vitesses[_CNN].png` | Distribution des vitesses instantanées |
 | `trajectoires_vitesse[_CNN].png` | Trajectoires colorées par vitesse |
 
@@ -191,7 +191,7 @@ Stack TIFF (T frames) → Tri chronologique → Détection par frame
 | Valeur | Régime | Signification biologique |
 |---|---|---|
 | α ≈ 1 | Diffusion brownienne | Mouvement libre non dirigé |
-| α < 1 | Sous-diffusion | Lysosome confiné (cage cytosquelettique) |
+| α < 1 | Sous-diffusion | puncta confiné (cage cytosquelettique) |
 | α > 1 | Supra-diffusion | Transport actif sur microtubules |
 
 ---
@@ -235,7 +235,7 @@ doivent être ajustés selon les caractéristiques de l'acquisition :
 | Paramètre | Notebook(s) | Impact |
 |---|---|---|
 | `cnn_threshold` | Fluo_Analyse, Tracking | Sensibilité détection somas |
-| `diameter_cellpose` | Fluo_Analyse, Tracking | Taille lysosomes attendue |
+| `diameter_cellpose` | Fluo_Analyse, Tracking | Taille punctas attendue |
 | `cellprob_threshold` | Fluo_Analyse, Tracking | Sensibilité Cellpose |
 | `search_range` | Tracking | Portée de liaison inter-frames |
 | `threshold_filtered` | Tracking | Longueur minimale trajectoire |

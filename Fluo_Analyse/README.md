@@ -1,9 +1,9 @@
-# Fluo_Analyse — Extractions informations & Comptage de lysosomes par image de microscopie
+# Fluo_Analyse — Extractions informations & Comptage de punctas par image de microscopie
 
 Ce notebook réalise l'**analyse en production** d'un lot d'images de microscopie
 de fluorescence TIFF. Il s'appuie sur le CNN soma (`SomaCNN`) entraîné dans
 `Pipeline_ML.ipynb` pour détecter les somas, puis utilise **Cellpose**
-pour segmenter et compter les lysosomes à l'intérieur de chaque soma détecté.
+pour segmenter et compter les punctas à l'intérieur de chaque soma détecté.
 
 ---
 
@@ -55,7 +55,7 @@ Best_plan_determination        → Plan le plus net (variance max)
         │    Finale_Fusion_patches                  → ROI finales
         │         │
         │         ▼
-        ├──► Cellpose_Analyse_Count                 → Comptage lysosomes / ROI
+        ├──► Cellpose_Analyse_Count                 → Comptage punctas / ROI
         │
         ├──► Save_images_and_overlay                → Images annotées sur disque
         ├──► Save_final_patches                     → ROI avec probabilités CNN
@@ -106,6 +106,7 @@ img_best = Best_plan_determination(chemin, output_flag=True)
 |-----------|---------|-------------|
 | `distance_transform` | `40` | Distance (px) to erode soma mask before exclusion |
 | `margin` | `40` | Extra margin (px) added around each soma bounding box |
+| `default_threshold` | `400` | Threshold applied by default to extract fluo informations |
 
 ### ROI fusion
 
@@ -117,7 +118,7 @@ img_best = Best_plan_determination(chemin, output_flag=True)
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `diameter` | `8` | Expected lysosome diameter in pixels |
+| `diameter` | `8` | Expected puncta diameter in pixels |
 | `cellprob_threshold` | `0.1` | Cellpose cell probability threshold |
 | `flow_threshold` | `0.5` | Cellpose flow error threshold |
 | `min_area` | `5` | Minimum area (px²) to keep a detected object |
@@ -137,7 +138,7 @@ Tous les fichiers de sortie sont placés dans `dossier/output/` :
 |---|---|
 | `<nom>_best.png` | Image du meilleur plan z |
 | `<nom>_mask_overlay.png` | Image + masque soma superposé |
-| `<nom>_annotated.png` | Image + ROI lysosomes colorées par probabilité CNN |
+| `<nom>_annotated.png` | Image + ROI punctas colorées par probabilité CNN |
 | `Results_with_true.csv` | Tableau complet : statistiques de fluorescence + `n_lyso` par image |
 
 ### Colonnes du CSV
@@ -148,5 +149,5 @@ Tous les fichiers de sortie sont placés dans `dossier/output/` :
 | `pmean` / `pmin` / `pmax` | Statistiques d'intensité brutes |
 | `area_true` | Aire hors-soma (px) |
 | `pmean_true` / `pmin_true` / `pmax_true` | Statistiques d'intensité hors-soma |
-| `n_lyso` | Nombre total de lysosomes détectés |
+| `n_lyso` | Nombre total de punctas détectés |
 | `canal` | Canal de fluorescence (`w1TRITC`, `w2GFP`, ou `autre`) |
